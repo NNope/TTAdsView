@@ -1,6 +1,6 @@
 # TTAdsView
 TTAdsView
-一个基于UICollectionView的轮播控件
+一个基于UICollectionView的轮播控件11
         
 ```使用本地数组
 TTAdsView *Ads =[[TTAdsView alloc] initWithFrame:CGRectMake(0, 100, 300, 130) PlaceholderImage:nil imageNames:array];
