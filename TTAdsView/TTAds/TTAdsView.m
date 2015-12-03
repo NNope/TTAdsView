@@ -90,7 +90,7 @@ static NSString* const AdsCellID = @"AdsCell";
     self.AdsCollectView.showsHorizontalScrollIndicator = NO;
     self.AdsCollectView.dataSource = self;
     self.AdsCollectView.delegate = self;
-//    self.AdsCollectView.bounces = false;
+    self.AdsCollectView.bounces = false;
     [self addSubview:self.AdsCollectView];
     
     
@@ -277,6 +277,10 @@ static NSString* const AdsCellID = @"AdsCell";
 }
 
 #pragma mark - UIScrollViewDelegate
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+}
+
 // 减速完成
 -(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {

@@ -48,7 +48,7 @@
     NSURL *url4 = [NSURL URLWithString:str4];
     NSArray *urlarray = @[url1,url2,url3,url4];
     
-    TTAdsView *A = [[TTAdsView alloc] initWithFrame:CGRectMake(0, 100, 300, 130) PlaceholderImage:nil Urls:urlarray];
+    TTAdsView *A = [[TTAdsView alloc] initWithFrame:CGRectMake(0, 100, 375, 130) PlaceholderImage:nil Urls:urlarray];
     
     A.timeInterval = 3;
     
