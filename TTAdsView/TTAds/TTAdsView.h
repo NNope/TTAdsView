@@ -20,7 +20,6 @@ typedef void (^SelectHandle)(NSInteger index);
 
 @interface TTAdsView : UIView<UICollectionViewDataSource,UICollectionViewDelegate>
 
-@property (nonatomic, strong) UICollectionView *AdsCollectView;
 /**
  *  图片url数组
  */
@@ -42,9 +41,14 @@ typedef void (^SelectHandle)(NSInteger index);
  */
 @property (nonatomic,weak) id <TTAdsViewDelegate> delegate;
 
--(instancetype)initWithFrame:(CGRect)frame PlaceholderImage:(UIImage *)image Urls:(NSArray *)urlarray;
+// 本地图片 一般就不用标题了
 -(instancetype)initWithFrame:(CGRect)frame PlaceholderImage:(UIImage *)image imageNames:(NSArray *)imagearray;
-+(instancetype)TTAdsViewWithFrame:(CGRect)frame PlaceholderImage:(UIImage *)image Urls:(NSArray *)urlarray;
+
+// url图片带标题
+-(instancetype)initWithFrame:(CGRect)frame PlaceholderImage:(UIImage *)image Urls:(NSArray *)urlarray titles:(NSArray *)titlearray;
+
+// url图片带标题
++(instancetype)TTAdsViewWithFrame:(CGRect)frame PlaceholderImage:(UIImage *)image Urls:(NSArray *)urlarray titles:(NSArray *)titlearray;
 
 -(void)stop;
 

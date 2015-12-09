@@ -47,8 +47,17 @@
     NSURL *url3 = [NSURL URLWithString:str3];
     NSURL *url4 = [NSURL URLWithString:str4];
     NSArray *urlarray = @[url1,url2,url3,url4];
-    
-    TTAdsView *A = [[TTAdsView alloc] initWithFrame:CGRectMake(0, 100, 375, 130) PlaceholderImage:nil Urls:urlarray];
+    /*
+     "title": "辉夜杯12月3日职业组开战",
+     "title": "联想杯完美世界全国高校联赛",
+     "title": "意见反馈",
+     */
+    NSString *ti1 = @"辉夜杯12月3日职业组开战";
+    NSString *ti2 = @"联想杯完美世界全国高校联赛";
+    NSString *ti3 = @"意见反馈";
+    NSString *ti4 = @"联想杯完美世界全国高校联赛";
+    NSArray *tiarray = @[ti1,ti2,ti3,ti4];
+    TTAdsView *A = [[TTAdsView alloc] initWithFrame:CGRectMake(0, 100, 375, 130) PlaceholderImage:nil Urls:urlarray titles:tiarray];
     
     A.timeInterval = 3;
     

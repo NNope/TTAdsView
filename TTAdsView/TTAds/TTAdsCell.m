@@ -7,7 +7,7 @@
 //
 
 #import "TTAdsCell.h"
-#import <SDWebImage/UIImageView+WebCache.h>
+#import "UIImageView+WebCache.h"
 @implementation TTAdsCell
 
 // 给cell设置imgae
@@ -19,7 +19,6 @@
 //}
 -(void)SetImageWithName:(NSString *)name
 {
-    
     self.imgView.image = [UIImage imageNamed:name];
     
 }

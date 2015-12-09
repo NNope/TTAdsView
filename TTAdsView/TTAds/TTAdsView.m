@@ -8,9 +8,10 @@
 
 #import "TTAdsView.h"
 #import "TTAdsCell.h"
-#import <SDWebImage/UIImageView+WebCache.h>
+#import "UIImageView+WebCache.h"
 
 static NSString* const AdsCellID = @"AdsCell";
+static CGFloat const TITLEHEIGHT = 25;
 @interface TTAdsView()
 /**
 *  是否使用网络图片
@@ -20,6 +21,10 @@ static NSString* const AdsCellID = @"AdsCell";
  *  图片name数组  本地用
  */
 @property (nonatomic, strong) NSArray *namesArray;
+/**
+ *  标题数组 非必要
+ */
+@property (nonatomic, strong) NSArray *titleArray;
 /**
  *  当前的图片索引
  */
@@ -33,23 +38,11 @@ static NSString* const AdsCellID = @"AdsCell";
  */
 @property(nonatomic,strong)NSTimer *timer;
 
+@property (nonatomic, strong) UICollectionView *AdsCollectView;
+@property (nonatomic, weak) UILabel *titleLabel;
+
 @end
 @implementation TTAdsView
-
--(instancetype)initWithFrame:(CGRect)frame PlaceholderImage:(UIImage *)image Urls:(NSArray *)urlarray
-{
-    if (self = [super initWithFrame:frame])
-    {
-        self.isWebImg = YES;
-        self.currentIndex = 0;
-        self.urlArray = urlarray;
-        self.placeHolderImg = image;
-        self.timeInterval = 1;
-        [self setUpcollectionView];
-        [self setUpPageControl];
-    }
-    return self;
-}
 
 -(instancetype)initWithFrame:(CGRect)frame PlaceholderImage:(UIImage *)image imageNames:(NSArray *)imagearray
 {
@@ -65,10 +58,28 @@ static NSString* const AdsCellID = @"AdsCell";
     }
     return self;
 }
-
-+(instancetype)TTAdsViewWithFrame:(CGRect)frame PlaceholderImage:(UIImage *)image Urls:(NSArray *)urlarray
+// url图片
+-(instancetype)initWithFrame:(CGRect)frame PlaceholderImage:(UIImage *)image Urls:(NSArray *)urlarray titles:(NSArray *)titlearray
 {
-    return [[self alloc] initWithFrame:frame PlaceholderImage:image Urls:urlarray];
+    if (self = [super initWithFrame:frame])
+    {
+        self.isWebImg = YES;
+        self.currentIndex = 0;
+        self.urlArray = urlarray;
+        self.titleArray = titlearray;
+        self.placeHolderImg = image;
+        self.timeInterval = 1;
+        [self setUpcollectionView];
+        [self setUpPageControl];
+    }
+    return self;
+}
+
+
+
++(instancetype)TTAdsViewWithFrame:(CGRect)frame PlaceholderImage:(UIImage *)image Urls:(NSArray *)urlarray titles:(NSArray *)titlearray
+{
+    return [[self alloc] initWithFrame:frame PlaceholderImage:image Urls:urlarray titles:titlearray];
 }
 
 #pragma mark - 创建
@@ -108,9 +119,32 @@ static NSString* const AdsCellID = @"AdsCell";
     _pageControl.currentPageIndicatorTintColor = [UIColor whiteColor];
     _pageControl.pageIndicatorTintColor = [UIColor grayColor];
     _pageControl.numberOfPages = self.urlArray.count;
-    _pageControl.frame = CGRectMake(0, 11, self.bounds.size.width, 10);
+    _pageControl.frame = CGRectMake(0, self.bounds.size.height - (self.titleArray?TITLEHEIGHT+15:15), self.bounds.size.width, 10);
     [self addSubview:_pageControl];
     
+    // 如果有title 在下面再加一个标题view 25高度
+    if (self.titleArray)
+    {
+        // 此处增加一个 数组个数的判断
+        if (self.urlArray.count != self.titleArray.count)
+        {
+            [NSException raise:@"TTAdsView" format:@"url数组个数与title数组个数不匹配"];
+        }
+        
+        UIView *titleBG = [[UIView alloc] init];
+        titleBG.backgroundColor = [UIColor grayColor];
+        titleBG.alpha = 0.6;
+        titleBG.frame = CGRectMake(0, self.bounds.size.height-TITLEHEIGHT, self.bounds.size.width, TITLEHEIGHT);
+        [self addSubview:titleBG];
+        // 不能加到bg上 会一起透明
+        UILabel *titleLbl = [[UILabel alloc] initWithFrame:titleBG.frame];
+        titleLbl.textAlignment = NSTextAlignmentCenter;
+        titleLbl.textColor = [UIColor whiteColor];
+        // 默认title
+        titleLbl.text = self.titleArray[0];
+        [self addSubview:titleLbl];
+        self.titleLabel = titleLbl;
+    }
 }
 
 -(void)setTimeInterval:(NSInteger)timeInterval
@@ -136,7 +170,6 @@ static NSString* const AdsCellID = @"AdsCell";
 // 设置数组的时候 下载
 -(void)setUrlArray:(NSArray *)urlArray
 {
-    NSLog(@"沙盒路径-----%@",NSHomeDirectory());
     
     _urlArray = urlArray;
     if (self.isWebImg)
@@ -218,7 +251,11 @@ static NSString* const AdsCellID = @"AdsCell";
     
     if (offset!=0)// 这样 完成滑动的时候但是没有翻页的时候 就不进来了
     {
+        /* 滑动完成  */
         _pageControl.currentPage = _currentIndex;
+        // title更换
+        _titleLabel.text = self.titleArray[_currentIndex];
+        
         // 固定滑动中间一格
         NSIndexPath *indexpath = [NSIndexPath indexPathForItem:1 inSection:0];
         
