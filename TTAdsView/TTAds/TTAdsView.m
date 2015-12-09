@@ -18,14 +18,6 @@ static CGFloat const TITLEHEIGHT = 25;
 */
 @property (nonatomic, assign) BOOL isWebImg;
 /**
- *  图片name数组  本地用
- */
-@property (nonatomic, strong) NSArray *namesArray;
-/**
- *  标题数组 非必要
- */
-@property (nonatomic, strong) NSArray *titleArray;
-/**
  *  当前的图片索引
  */
 @property (nonatomic, assign) NSInteger currentIndex;

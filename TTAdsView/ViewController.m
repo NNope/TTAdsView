@@ -10,6 +10,7 @@
 #import "TTAdsView.h"
 
 @interface ViewController ()<TTAdsViewDelegate>
+@property (nonatomic, strong) TTAdsView *ttads;
 
 @end
 
@@ -25,9 +26,6 @@
         NSString *name = [NSString stringWithFormat:@"img_0%d",i+1];
         [array addObject:name];
     }
-    
-    //    TTAdsView *A =[[TTAdsView alloc] initWithFrame:CGRectMake(0, 100, 300, 130) PlaceholderImage:nil imageNames:array];
-    
     // url
     /*
      http://pic14.nipic.com/20110522/7411759_164157418126_2.jpg
@@ -57,15 +55,48 @@
     NSString *ti3 = @"意见反馈";
     NSString *ti4 = @"联想杯完美世界全国高校联赛";
     NSArray *tiarray = @[ti1,ti2,ti3,ti4];
-    TTAdsView *A = [[TTAdsView alloc] initWithFrame:CGRectMake(0, 100, 375, 130) PlaceholderImage:nil Urls:urlarray titles:tiarray];
+     self.ttads = [[TTAdsView alloc] initWithFrame:CGRectMake(0, 100, 375, 130) PlaceholderImage:nil Urls:urlarray titles:tiarray];
     
-    A.timeInterval = 3;
+    self.ttads.timeInterval = 3;
     
-    A.selectBlock = ^(NSInteger index){
+    self.ttads.selectBlock = ^(NSInteger index){
         NSLog(@"点击了第%ld站图片",index);
     };
-    A.delegate = self;
-    [self.view addSubview:A];
+    self.ttads.delegate = self;
+    [self.view addSubview:self.ttads];
+    
+    
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    btn.frame = CGRectMake(111, 555, 111, 111);
+    [btn setTitle:@"TestButton" forState:UIControlStateNormal];
+    [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [btn addTarget:self action:@selector(Test) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:btn];
+}
+
+-(void)Test
+{
+    NSString *ti1 = @"修改后标题";
+    NSString *ti2 = @"修改后标题赛";
+    NSString *ti3 = @"修改后标题";
+    NSString *ti4 = @"修改后标题赛";
+    NSArray *tiarray = @[ti1,ti2,ti3,ti4];
+    self.ttads.titleArray = tiarray;
+    
+    NSString *str1 = @"http://pic14.nipic.com/20110522/7411759_164157418126_2.jpg";
+
+    NSURL *url1 = [NSURL URLWithString:str1];
+    NSURL *url2 = [NSURL URLWithString:str1];
+    NSURL *url3 = [NSURL URLWithString:str1];
+    NSURL *url4 = [NSURL URLWithString:str1];
+    NSArray *urlarray = @[url1,url2,url3,url4];
+    self.ttads.urlArray = urlarray;
+    
+    
+    self.ttads.selectBlock = ^(NSInteger index){
+        NSLog(@"我改了   。了第%ld站图片",index);
+    };
+
 }
 
 

@@ -25,13 +25,17 @@ typedef void (^SelectHandle)(NSInteger index);
  */
 @property (nonatomic, strong) NSArray *urlArray;
 /**
+ *  标题数组 非必要
+ */
+@property (nonatomic, strong) NSArray *titleArray;
+/**
  *  占位图
  */
 @property (nonatomic, strong) UIImage *placeHolderImg;
 /**
  *  间隔 默认5s
  */
-@property (nonatomic,assign)NSInteger timeInterval;
+@property (nonatomic,assign) NSInteger timeInterval;
 /**
  *  点击block
  */
