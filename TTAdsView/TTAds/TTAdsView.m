@@ -184,6 +184,7 @@ static CGFloat const TITLEHEIGHT = 25;
 -(void)stop
 {
     [self.timer invalidate];
+    self.timer = nil;
 }
 
 #pragma mark - Private
@@ -193,8 +194,8 @@ static CGFloat const TITLEHEIGHT = 25;
 -(void)beginAnimations
 {
     // 当前的偏移量 + 一个宽度 别的不用管，反正就是这样
-    NSIndexPath *indexpath = [NSIndexPath indexPathForItem:2 inSection:0];
-    [self.AdsCollectView scrollToItemAtIndexPath:indexpath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:YES];
+//    NSIndexPath *indexpath = [NSIndexPath indexPathForItem:2 inSection:0];
+//    [self.AdsCollectView scrollToItemAtIndexPath:indexpath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:YES];
 }
 
 /**
@@ -338,6 +339,7 @@ static CGFloat const TITLEHEIGHT = 25;
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
+    // 重启
     [self.timer setFireDate:[NSDate dateWithTimeIntervalSinceNow:self.timeInterval]];
 }
 
