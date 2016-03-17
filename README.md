@@ -14,12 +14,12 @@ TTAdsView *Ads = [[TTAdsView alloc] initWithFrame:CGRectMake(0, 100, 300, 130) P
 ```
 
 回调的处理
-```objc
-A.selectBlock = ^(NSInteger index){
+
+	A.selectBlock = ^(NSInteger index){
     NSLog(@"点击了第%ld站图片",index);
-};
--(void)TTAdsView:(UICollectionView *)tTAdsView didSelectItemAtIndex:(NSInteger)index
-{
+	};
+	-(void)TTAdsView:(UICollectionView *)tTAdsView didSelectItemAtIndex:(NSInteger)index
+	{
     NSLog(@"点击了第%ld站图片",index);
-}
-```
+	}	
+
